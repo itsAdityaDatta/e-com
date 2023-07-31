@@ -1,0 +1,44 @@
+body{
+    margin: 0;
+}
+
+.bg-purple{
+    background-color: #F4F5FA;
+}
+
+.bg-blue{
+    background-color: #0d2c88;
+}
+
+.text-blue{
+    color: #0d2c88;
+}
+
+.text-pink{
+    color: rgb(249, 126, 147);
+}
+
+.wrapper{
+    min-height: calc(100vh - 123.51px);
+}
+
+.text-orange{
+    color: rgb(240, 96, 0);
+}
+
+.bg-orange{
+    background-color: rgb(240, 96, 0);
+}
+
+.btn-outline-orange{
+    color: rgb(240, 96, 0);
+    border: 1.5px solid rgb(240, 96, 0);
+    padding: 6px;
+    background-color: white;
+}
+
+.btn-outline-orange:hover{
+    color: white;
+    background-color: rgb(240, 96, 0);
+    transition-duration: 0.1s;
+}

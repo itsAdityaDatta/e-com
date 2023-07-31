@@ -1,0 +1,111 @@
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color: rgb(172, 70, 2);
+}
+
+.img-fluid{
+    cursor: pointer;
+}
+
+.price-details{
+    position: fixed;
+    top: 110px;
+    right: 60px;
+    margin-bottom: 20px;
+}
+
+.book-name{
+    cursor: pointer;
+}
+
+.btn-outline-orange-custom{
+    color: rgb(240, 96, 0);
+    border: 1px solid rgb(240, 96, 0);
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+.btn-outline-orange-custom-2{
+    color: rgb(240, 96, 0);
+    border: 1px solid rgb(240, 96, 0);
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+.delete{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.delete:hover{
+    color: rgb(240, 96, 0);
+    transition-duration: 0.1s;
+}
+
+.border-left{
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.border-center{
+    border-left : 0px;
+    border-right: 0px;
+}
+
+.btn-cancel{
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+}
+
+.btn-cancel:hover{
+    color: white;
+    background-color: rgb(0, 0, 0);
+    transition-duration: 0.1s;
+}
+
+.border-right{
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.btn-outline-orange-custom:hover{
+    color: white;
+    background-color: rgb(240, 96, 0);
+    transition-duration: 0.1s;
+}
+
+@media only screen and (max-width: 767px) {
+    .price-details{
+        position: relative;
+        top: 0px;
+        right: 0px;
+    }
+}
+
+.bg-opaque{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.bg-orange-2{
+    background-color: rgb(224, 90, 0);
+}

@@ -1,0 +1,29 @@
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color: rgb(172, 70, 2);
+}
+
+.csv-upload-input{
+    cursor: pointer;
+}
+
+.cursor{
+    cursor:  pointer;
+}
+
+.img-col{
+    max-width: 160px;
+}
+
+.btn-orange{
+    background-color: rgb(254, 103, 2);
+    color: white;
+}
+
+.btn-orange:hover{
+    background-color: rgb(207, 84, 2);
+}

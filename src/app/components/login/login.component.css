@@ -1,0 +1,25 @@
+.form-wrapper{
+    width: 300px;
+}
+
+input.ng-invalid{
+    border-left : 5px solid rgb(240, 96, 0);
+}
+
+input.ng-valid{
+    border-left: 5px solid green;
+}
+
+.alert{
+    position: fixed;
+    top: 100px;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover{
+    color: rgb(240, 96, 0);
+}

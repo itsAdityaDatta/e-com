@@ -1,0 +1,75 @@
+
+    <ng-template *ngIf="loginService.isUserLoggedIn(); then loggedInPage else notLoggedInPage"></ng-template>
+    <ng-template #loggedInPage>
+        <div class="container-fluid wrapper" >
+            <ng-container *ngIf="itemIdOutOfBound; then noProductPage else productPage"> </ng-container>
+            <ng-template #productPage>
+                <div class="row p-5">
+                    <div class="col-12 col-md-4 text-center pb-4">
+                        <img [src]="product.img" class="img-fluid" />
+                    </div>
+                    <div class="col-12 col-md-8"> 
+                        <div class="h2"><b>{{product.name}}</b></div>
+                        <p class="mt-3 mb-3">
+                            <ng-template ngFor let-item [ngForOf]="createRange(product.rating)">
+                                <i class="bi bi-star-fill text-orange"></i>
+                            </ng-template>
+                            <ng-template ngFor let-item [ngForOf]="createRange(5-product.rating)">
+                                <i class="bi bi-star-fill"></i>
+                            </ng-template>
+                        </p>
+                        <p class="small mb-0"><b>Author -</b> {{product.author | titlecase}}</p>
+                        <p class="small mb-2"><b>Publisher -</b> {{product.publisher}}</p>
+                        <p class="h4 text-orange mb-1 mt-3">{{product.price | inr}}</p>
+                        <p class="text-success small">Inclusive of all taxes</p>
+    
+                        <div class="mt-4">
+                            <p class="h5">About the book:</p>
+                            <p class="small">{{product.desc}}</p>
+                        </div>
+    
+                        <div class="mt-4 small">
+                            <p class="m-0"><b>Number of Pages -</b> {{product.totalPages}}</p>
+                            <p class="m-0"><b>Language -</b> {{product.language}} </p>
+                            <p class="m-0"><b>Publishing Year -</b> {{product.year}}</p>
+                        </div>
+    
+                        <div class="mt-4">
+                            <button (click)="addToCart()" class="btn-outline-orange rounded-0 h6 me-1"><i class="bi bi-cart-plus-fill"></i>  Add to cart</button>
+                            <button routerLink="/cart" class="btn-goto-cart rounded-0 h6 ms-1"><i class="bi bi-arrow-right"></i>  Go to cart</button>
+                       
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        
+            <ng-template #noProductPage>
+                
+                    <div class="wrapper container-fluid p-4 text-center d-flex align-items-center text-center">
+                        <div class="container-fluid">
+                            <img style="max-height: 150px" src="../../../assets/images/itemNotFound.png" class="img-fluid; mb-2" />
+                            <p class="mb-2">
+                                Item not found in the database.<br>Goto the <a routerLink="/home" class="text-orange">home page</a> in order to shop for more products.
+                            </p>
+
+                        </div>
+                    </div>
+            </ng-template>
+        </div>
+
+        <!-- TOAST -->
+        <div  *ngIf="justAdded" class="bg-orange text-center text-white small p-2" style="position: fixed; top: 80.51px; right: 14px">
+        Book successfully added to cart!
+        </div>
+
+    </ng-template>
+    <ng-template #notLoggedInPage>
+        <div class="wrapper d-flex align-items-center">
+            <div class="container-fluid p-4 text-center">
+                <img style="max-height: 100px" src="../../../assets/images/book1.png" class="img-fluid; mb-2" />
+                <p class="mb-2">
+                    It looks like you're not logged in. <br>Goto the <a routerLink="/" class="text-orange">login page</a> in order to get started.
+                </p>
+            </div>
+        </div>
+    </ng-template>

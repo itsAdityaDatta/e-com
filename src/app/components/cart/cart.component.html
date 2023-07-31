@@ -1,0 +1,123 @@
+<div class="wrapper"> 
+    <ng-container *ngIf="isUserLoggedIn; then cartDiv else noCartDiv"></ng-container>
+    <ng-template #cartDiv>
+        <ng-container *ngIf="itemArr.length; then productsDiv else noProductsDiv"></ng-container>
+        
+        <ng-template #productsDiv>
+            <div class="m-2 mt-0 p-5 row justify-content-center ">
+                <div class="col-12 col-sm-8 col-md-6 p-0 justify-content-center"> 
+                    <div class="mb-3">
+                        You have <span class="text-orange fw-bolder">{{cartService.numItemsInCart}}</span> item(s) in your cart.
+                    </div>
+                    <ng-container *ngFor="let item of itemArr">
+                        <div class="mb-4">
+                            <div class="row bg-purple position-relative">
+                                <div class="col-4 col-sm-3 text-center d-flex justify-content-center p-0">
+                                    <img routerLink="/products/{{item.product.id}}" class="img-fluid" src="{{item.product.img}}" />
+                                </div>
+                                <div class="col-8 col-sm-9 p-3">
+                                    <div class="h5 mb-1 w-75 book-name" routerLink="/products/{{item.product.id}}">{{item.product.name}}</div>
+                                    <div class="small">{{item.product.author}}</div>
+                                    <div class="small mt-1">
+                                        <ng-template ngFor let-item [ngForOf]="createRange(item.product.rating)">
+                                            <i class="bi bi-star-fill text-orange"></i>
+                                        </ng-template>
+                                        <ng-template ngFor let-item [ngForOf]="createRange(5-item.product.rating)">
+                                            <i class="bi bi-star-fill"></i>
+                                        </ng-template>
+                                    </div>
+    
+                                    <div class="small text-muted mt-2">{{item.product.desc | truncate}}</div>
+                                    <div class="mt-2 small">
+                                        <button class="btn-outline-orange-custom border-left" (click)="deleteProduct(item.product.id)">-</button>
+                                        <button class="btn-outline-orange-custom-2 border-center" disabled>{{item.quantity}}</button>
+                                        <button class="btn-outline-orange-custom border-right" (click)="addProduct(item.product.id)">+</button>
+                                    </div>
+                                    <div class="h6 mt-3">{{getTotalPrice(item.quantity, item.product.price) | inr}}</div>
+                                    <div>
+                                        <i class="bi bi-x-lg h5 delete" (click)="trash(item.product.id)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </ng-container>
+                </div>
+                <div class="col-12 col-sm-8 col-md-2 mt-3 mb-3 price-details p-0">
+                    <div class="h6">Cart Details</div>
+                    <table class="table border mt-2 bg-purple" >
+                      <tbody>
+                        <tr >
+                          <td colspan="2">Total Price</td>
+                          <td class="totalAmount">{{totalPrice | inr}}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">Service Tax</td>
+                          <td class=""><del>FREE</del></td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold" colspan="2">Total Amount</td>
+                          <td class="fw-bold totalAmount"> <span class="text-orange">{{totalPrice | inr}}</span> </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="small">
+                        <button class="btn-outline-orange-custom me-2 mt-2 " (click)="placeOrder()"><i class="bi bi-cart-check"></i> Place Order</button>
+                        <button class="btn-cancel mt-2 " (click)="clearCart()"><i class="bi bi-cart-x"></i> Clear Cart</button>
+                    </div>    
+                </div>
+            </div>
+    
+            <div id="my-modal" class="modal" style="transition-duration: 1.5s" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+                <div class="bg-opaque"></div>
+    
+                <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center bg-orange-2 text-white p-2">
+                    <div class="modal-title p-0">
+                        <h4>Delete Item</h4>
+                    </div>
+                    </div>
+                    <div class="modal-body p-3">
+                        <p class="modalFont p-2">Are you sure that you would like to remove this item from your cart?</p>
+                        <p class="text-end mb-0 pb-0">
+                            <button class="btn-outline-orange-custom me-2" (click)="removeProduct()"><i class="bi bi-trash3"></i> Delete</button> 
+                            <button class="btn-cancel" (click)="hideModal()"><i class="bi bi-x-lg"></i> Cancel</button>
+                        </p>
+                    </div>
+                </div>
+                </div>
+            </div> 
+            
+        </ng-template>
+
+        <ng-template #noProductsDiv>
+            <div class="wrapper d-flex align-items-center">
+                <div class="container-fluid p-4 text-center">
+                    <img style="max-height: 100px" src="../../../assets/images/nocart.png" class="img-fluid; mb-2" />
+                    <p class="mb-2 mt-2">
+                        You currently have zero items in your cart. <br>Goto the <a routerLink="/home" class="text-orange">home page</a> in order to shop for more books!
+                    </p>
+                </div>
+            </div>
+        </ng-template>
+
+         <!-- TOAST -->
+        <div  *ngIf="justPlaced" class="bg-orange text-center text-white small p-2" style="position: fixed; top: 80.51px; right: 14px">
+            Order successfully placed!
+        </div>
+        
+    </ng-template>
+
+    <ng-template #noCartDiv>
+        <div class="wrapper d-flex align-items-center">
+            <div class="container-fluid p-4 text-center">
+                <img style="max-height: 100px" src="../../../assets/images/book1.png" class="img-fluid; mb-2" />
+                <p class="mb-2">
+                    It looks like you're not logged in. <br>Goto the <a routerLink="/" class="text-orange">login page</a> in order to get started.
+                </p>
+            </div>
+        </div>
+    </ng-template>
+      
+
+</div>

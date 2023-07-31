@@ -1,0 +1,39 @@
+<div class="wrapper d-flex align-items-center ">
+    <div *ngIf="isUserLoggedIn; then loggedInDiv else notLoggedInDiv"></div>
+
+    <ng-template #loggedInDiv >
+        <div class="container-fluid p-4 text-center">
+            <img style="max-height: 100px" src="../../../assets/images/loggedin.jpeg" class="img-fluid; mb-2" />
+            <p>
+                It looks like you're already logged in. <br><a class="text-orange" (click)="logout()">Log-out</a> or goto the <a routerLink="/home" class="text-orange">home page</a> to shop for more books!
+            </p>
+        </div>
+    </ng-template>
+    
+    
+    <ng-template #notLoggedInDiv>
+        
+        <div class="container d-flex justify-content-center p-4 ">
+            <div class="form-wrapper p-3 border-dark rounded-right-4 justify-content-start">
+                <h3> <span class="text-orange">Book</span>Store Login<span class="text-orange">.</span></h3>
+                <div *ngIf="invalidEmailPswd" class="alert alert-danger alert-dismissible text-center p-3" role="alert">
+                    <strong>Error - invalid email / password</strong>
+                </div>
+                <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)" >
+                    <div class="mt-3">
+                        <input (keyup)="hideAlert($event)" required email #email ngModel type="email" class="form-control rounded-0" id="email" placeholder="Enter email" name="email">
+                    </div>
+                    
+                    <div class=" mt-3">
+                        <input (keyup)="hideAlert($event)"  required #pswd ngModel type="password" class="form-control rounded-0" id="pwd" placeholder="Enter password" name="pswd">
+                    </div>
+                    <div class="mt-3 text-end">
+                        <button class="btn-outline-orange rounded-0 p-1 ps-3 pe-3" type="submit">Submit <i class="bi bi-arrow-right"></i></button>
+                    </div>
+                </form>
+            </div>
+            
+        </div> 
+    </ng-template>
+
+</div>

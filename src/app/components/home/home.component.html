@@ -1,0 +1,111 @@
+<div class="wrapper" (window:resize)="filterFixStringFunction()">
+    
+    <ng-container *ngIf="isUserLoggedIn; then productsDiv else noProductsDiv"></ng-container>
+
+    <ng-template #productsDiv >
+        <div class="container-fluid">
+            
+            <div class="display-products row ">
+                <div ></div>
+                <div class="col-12 p-0 bg-purple">
+                    <div class="row gx-0">  
+                        <div class="col p-0">
+                            <button class="btn btn-light rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                <i class="bi bi-list"></i> Filters
+                            </button>
+                        </div>
+                        <div class="col p-0 text-end">
+                            <button class="btn btn-light rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sort
+                            </button>
+                            <ul class="dropdown-menu p-0 rounded-0" aria-labelledby="dropdownMenuButton1">
+                                <li (click)="sortHandler(0)" [ngClass]="[filters.sort == 0 ? 'dropdown-item small bg-orange text-white' : 'dropdown-item small']" >Relevance</li>
+                                <li (click)="sortHandler(1)" [ngClass]="[filters.sort == 1 ? 'dropdown-item small bg-orange text-white' : 'dropdown-item small']" >Rating</li>
+                                <li (click)="sortHandler(2)" [ngClass]="[filters.sort == 2 ? 'dropdown-item small bg-orange text-white' : 'dropdown-item small']" >Price (Low-High)</li>
+                                <li (click)="sortHandler(3)" [ngClass]="[filters.sort == 3 ? 'dropdown-item small bg-orange text-white' : 'dropdown-item small']" >Price (High-Low)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3 col-md-2 filters shadow-sm collapse collapse-horizontal m-0" id="collapseWidthExample">
+                    <div class="container-fluid text-white p-0 m-0 " >{{filterFixString}} </div>
+                    <div class="filters-container p-0">
+                        <div class=" ps-3 mb-2 filters-title">Category</div>
+                        <div class=" mb-4 ps-3 small">
+                            <input [(ngModel)]="filters.categories.Fiction" (change)="saveFilters()" type="checkbox" class="me-1"/> Fiction<br>
+                            <input [(ngModel)]="filters.categories.Comics" (change)="saveFilters()" type="checkbox" class="me-1"/> Comics<br>
+                            <input [(ngModel)]="filters.categories.Economics" (change)="saveFilters()" type="checkbox" class="me-1"/> Economics<br>
+                            <input [(ngModel)]="filters.categories.Literature" (change)="saveFilters()" type="checkbox" class="me-1"/> Literature<br>
+                            <input [(ngModel)]="filters.categories.SelfHelp" (change)="saveFilters()" type="checkbox" class="me-1"/> Self-Help<br>
+                            <input [(ngModel)]="filters.categories.Academics" (change)="saveFilters()" type="checkbox" class="me-1"/> Academics<br>
+                        </div>
+
+
+                        <hr class="text-muted">
+                        <div class=" ps-3 mt-2 mb-2 mt-4 filters-title">Language</div>
+                        <div class=" mb-4 ps-3 small">
+                            <input [(ngModel)]="filters.language.English" (change)="saveFilters()" type="checkbox" class="me-1"/> English<br>
+                            <input [(ngModel)]="filters.language.Hindi" (change)="saveFilters()" type="checkbox" class="me-1"/> Hindi<br>
+                        </div>
+
+
+                        <hr class="text-muted">
+                        <div class=" ps-3 mt-2 mb-1 mt-4 filters-title">Minimum Rating</div>
+                        <div class=" mb-4 ps-3">
+                            <span (click)="ratingHandler(1)"><i [ngClass]="[filters.minRating >= 1 ? 'bi bi-star-fill me-1' : 'bi bi-star me-1']" ></i></span>
+                            <span (click)="ratingHandler(2)"><i [ngClass]="[filters.minRating >= 2 ? 'bi bi-star-fill me-1' : 'bi bi-star me-1']"></i></span>
+                            <span (click)="ratingHandler(3)"><i [ngClass]="[filters.minRating >= 3 ? 'bi bi-star-fill me-1' : 'bi bi-star me-1']"></i></span>
+                            <span (click)="ratingHandler(4)"><i [ngClass]="[filters.minRating >= 4 ? 'bi bi-star-fill me-1' : 'bi bi-star me-1']"></i></span>
+                            <span (click)="ratingHandler(5)"><i [ngClass]="[filters.minRating >= 5 ? 'bi bi-star-fill me-1' : 'bi bi-star me-1']"></i></span>
+                        </div>
+                    
+
+                        <hr class="text-muted">
+                        <div class="ps-3 mt-2 mb-2 mt-4 filters-title">Maximum Price  <span class="small">({{filters.maxPrice}})</span></div>
+                        <input min=0 max=5000 step=100 type="range" value="{{filters.maxPrice}}" (input)="priceHandler($event)" class="ps-3 form-range mb-4 pe-3">
+                        
+                        <hr class="text-muted">
+                    </div>
+
+
+                </div>
+                <div class="col products p-4 pt-2 pb-2">
+                    <div class="text-muted p-2 pb-0 small">Showing {{products.length}} of {{totalProducts}} books | Sorted by {{ sortArr[filterService.getFilters()['sort'] ] }}</div> 
+                    
+                    <div class="row">
+                        <ng-container *ngFor="let product of products">
+                            <div class="col-12 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 mb-2 p-4" [routerLink]="['/products', product.id]"  >
+                                <div class="bg-white product">
+                                    <div class="product-img text-center">
+                                        <img [src]= "product.img" class="img-fluid home-images">
+                                        <span class="rating shadow">{{product.rating}} <i class="bi bi-star-fill"></i></span>
+                                    </div>
+                                    <div class="p-2 product-desc">
+                                        <small>
+                                            <b class="h6">{{product.name}}</b>
+                                            <p class="text-muted m-0 "> <small>{{product.author}}</small></p>
+                                            <span class="text-dark">{{product.price | inr}}</span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    
+    
+    <ng-template #noProductsDiv>
+        <div class="wrapper d-flex align-items-center">
+            <div class="container-fluid p-4 text-center">
+                <img style="max-height: 100px" src="../../../assets/images/book1.png" class="img-fluid; mb-2" />
+                <p class="mb-2">
+                    It looks like you're not logged in. <br>Goto the <a routerLink="/" class="text-orange">login page</a> in order to get started.
+                </p>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

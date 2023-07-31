@@ -1,0 +1,28 @@
+button{
+    font-family: 'Roboto', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover{
+    color: rgb(172, 70, 2);
+}
+
+.btn-goto-cart{
+    border: 1.5px solid black;
+    padding: 6px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.btn-goto-cart:hover{
+    background-color: black;
+    color: white;
+}
+
+.img-fluid{
+    max-height: calc(100vh - 250px);
+}

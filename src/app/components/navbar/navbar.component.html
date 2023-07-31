@@ -1,0 +1,10 @@
+<nav class="navbar sticky-top bg-white justify-content-between p-2 ps-3 pe-3 shadow-sm border-bottom ">
+    <a routerLink="/home" class="navbar-brand d-flex align-items-center mr-auto" href="#">
+        <img width="160px" src="../../../assets/images/logo.png">
+    </a>
+    <div *ngIf="loginService.isUserLoggedIn()" class="d-inline-block navbar-icons">
+        <a routerLink="/cart" class=" d-inline-block text-center position-relative"><i class="bi bi-cart"></i><br>Cart <span class="num-items-in-cart" *ngIf="cartService.numItemsInCart" >{{cartService.numItemsInCart}}</span></a>
+        <a routerLink="/upload" class=" d-inline-block ms-4 me-3 text-center"><i class="bi bi-cloud-upload"></i><br>Upload</a>
+        <a (click)="logout()" class=" d-inline-block text-center"><i class="bi bi-box-arrow-right"></i><br>Logout</a>
+    </div>
+</nav>
